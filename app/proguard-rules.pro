@@ -1,21 +1,71 @@
-# Add project specific ProGuard rules here.
-# You can control the set of applied configuration files using the
-# proguardFiles setting in build.gradle.
-#
-# For more details, see
-#   http://developer.android.com/guide/developing/tools/proguard.html
+# ----------------------------------------
+# Retrofit
+# ----------------------------------------
+-dontnote retrofit2.Platform
+-dontwarn retrofit2.Platform$Java8
+-dontwarn retrofit2.**
+-keepattributes Signature
+-keepattributes Exceptions
 
-# If your project uses WebView with JS, uncomment the following
-# and specify the fully qualified class name to the JavaScript interface
-# class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
+# ----------------------------------------
+# OkHttp
+# ----------------------------------------
+-dontwarn okhttp3.**
+-dontwarn com.squareup.okhttp3.**
+-dontwarn okio.**
 
-# Uncomment this to preserve the line number information for
-# debugging stack traces.
-#-keepattributes SourceFile,LineNumberTable
+-dontwarn javax.annotation.**
+-keepclasseswithmembers class * {
+    @com.squareup.moshi.* <methods>;
+}
+-keep @com.squareup.moshi.JsonQualifier interface *
 
-# If you keep the line number information, uncomment this to
-# hide the original source file name.
-#-renamesourcefileattribute SourceFile
+-keepclassmembers class kotlin.Metadata {
+    public <methods>;
+}
+
+# ----------------------------------------
+# Glide
+# ----------------------------------------
+-keep public class * implements com.bumptech.glide.module.GlideModule
+-keep public class * extends com.bumptech.glide.module.AppGlideModule
+-keep public enum com.bumptech.glide.load.resource.bitmap.ImageHeaderParser$** {
+  **[] $VALUES;
+  public *;
+}
+
+# ----------------------------------------
+# RxJava
+# ----------------------------------------
+-dontwarn rx.internal.util.unsafe.**
+-keep class rx.schedulers.Schedulers {
+    public static <methods>;
+}
+-keep class rx.schedulers.ImmediateScheduler {
+    public <methods>;
+}
+-keep class rx.schedulers.TestScheduler {
+    public <methods>;
+}
+-keep class rx.schedulers.Schedulers {
+    public static ** test();
+}
+
+# ----------------------------------------
+# dagger
+# ----------------------------------------
+-dontwarn com.google.errorprone.annotations.*
+
+# ----------------------------------------
+# DataBinding
+# ----------------------------------------
+-keepclassmembers public class io.github.droidkaigi.confsched2018.presentation.common.binding.* {*;}
+-keep class android.databinding.** { *; }
+-keepattributes *Annotation*
+-keepattributes javax.xml.bind.annotation.*
+-keepattributes javax.annotation.processing.*
+
+-keepclassmembers class ** {
+    @android.databinding.BindingAdapter public *;
+}
+-dontwarn android.databinding.**
